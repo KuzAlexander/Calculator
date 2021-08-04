@@ -1,22 +1,19 @@
 <?php
-    function outputTabl($arr){
-        foreach($arr as $arr1){
-            foreach($arr1 as $arr2){
-                foreach($arr2 as $value){
-                    echo $value . ' ';		
-                }
-                echo "\n";		
-            }
-            echo "\n";	            
-        }
 
+    function outputKey($array){
+        echo "\n";
+        foreach ($array as $key => $value){
+            echo $key . ' - ' . $value . ' ';
+        }
+        echo "\n";
     }
 
-    function searchTonnage($arr, $ton){
-        for($i = 2; $i < count($arr); $i++){
-            if (trim($arr[$i][0]) == $ton){
-                return $i;
-            }
-        } 	
-    }  
-?>    
+    function check($element, $array){
+        $key = array_keys($array);
+        $num = array_search($element, $key);
+        if($num === false) {
+            return -1;
+        }else{
+            return $num;
+        }
+    }
