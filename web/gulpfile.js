@@ -1,4 +1,4 @@
-let project_folder = "dist";
+let project_folder = "public";
 //let project_folder = require("path").basename(__dirname);   //имя папки совпадает с названием проекта
 let source_folder = "src";
 let fs = require('fs');                                       //для подключения шрифтов
@@ -14,7 +14,7 @@ let path = {
     },
     src: {
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        php: [source_folder + "/*.php", "!" + source_folder + "/_*.php"],
+        php: [source_folder + "/index.php"],
         css: source_folder + "/scss/style.scss",
         js: source_folder + "/javascript/script.js",
         img: source_folder + "/images/**/*.{jpg,png,gif,ico}",
