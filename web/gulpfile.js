@@ -6,7 +6,6 @@ let fs = require('fs');                                       //для подк�
 let path = {
     build: {
         html: project_folder + "/",
-        php: project_folder + "/",
         css: project_folder + "/css/",
         js: project_folder + "/javascript/",
         img: project_folder + "/images/",
@@ -14,7 +13,6 @@ let path = {
     },
     src: {
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        php: [source_folder + "/index.php"],
         css: source_folder + "/scss/style.scss",
         js: source_folder + "/javascript/script.js",
         img: source_folder + "/images/**/*.{jpg,png,gif,ico}",
@@ -22,12 +20,11 @@ let path = {
     },
     watch: {
         html: source_folder + "/**/*.html",
-        php: source_folder + "/**/*.php",
         css: source_folder + "/scss/**/*.scss",
         js: source_folder + "/javascript/**/*.js",
         img: source_folder + "/images/**/*.{jpg,png,gif,ico}",
     },
-    clean: "./" + project_folder + "/"
+    clean: "./!" + project_folder + "/index.php"
 }
 
 const { src, dest, series, parallel, watch } = require('gulp'),
@@ -73,13 +70,6 @@ function html() {
     return src(path.src.html)
         .pipe(fileinclude())
         .pipe(dest(path.build.html))
-        .pipe(browsersync.stream())
-}
-
-function php() {
-    return src(path.src.php)
-        .pipe(fileinclude())
-        .pipe(dest(path.build.php))
         .pipe(browsersync.stream())
 }
 
@@ -208,7 +198,6 @@ function cb() {
 
 function watchFiles() {
     watch([path.watch.html], html);
-    watch([path.watch.php], php);
     watch([path.watch.css], css);
     watch([path.watch.js], js);
     watch([path.watch.img], img);
@@ -225,7 +214,7 @@ exports.img         = img;
 exports.svg         = svg;
 exports.clean       = clean;
 
-let build = series(clean,parallel(js, html, php, css, copy, img, fonts, svg), fontsStyle)
+let build = series(clean,parallel(js, html, css, copy, img, fonts, svg), fontsStyle)
 exports.default = parallel(build, watchFiles, browserSync)
 
 

@@ -1,10 +1,14 @@
 <?php
 
-    function getKeyNumber($element, array $array)
+    function getKeyNumber($element, array $array): ?int
     {
         $key = array_keys($array);
-        $num = array_search($element, $key);
-        return $num === false ? NULL : $num;
+        foreach ($key as $value) {
+            if ($element === (string) $value) {
+                return $value;
+            }
+        }
+        return null;
     }
 
     function tableOutput(array $array, string $product, array $month): string
@@ -29,29 +33,23 @@
 
     function option(array $arr, string $name, $selected): string
     {
-        $str = "";
-        if ($selected === null) {
-            $str .= "<option selected disabled>$name</option>";
-        } else {
-            $str .= "<option disabled>$name</option>";
-        }
+        $select = ($selected === null) || ($selected === $name) ? 'selected' : '';
+        $str = "<option $select>$name</option>";
 
         foreach($arr as $key => $value) {
-            if ($key == $selected && $selected != null) {
-                $ch = "selected";
-            } else {
-                $ch = "";
-            }
+            $ch = (string) $key === $selected ? 'selected' : '';
             $str .= "<option $ch value='$key'>$value</option>";
         }
         return $str;
     }
 
-    function warning(string $str, $index)
+    function warning(string $str, $index): string
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && $index === null) {
-            echo "<p class='warning mb-1'>выберите $str</p>";
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && (($index === null) || ($index === $str))) {
+            return "<p class='warning mb-1'>выберите $str</p>";
         }
+        return '';
     }
+
 
 
