@@ -1,5 +1,5 @@
 <?php
-    require_once('../table.php');
+    require_once('../../data/table.php');
     require_once ('../func.php');
 
     $keyArr = array_keys($arr);
@@ -18,22 +18,8 @@
     if (isset($tonnage)) {
         $tonnageIndex = getKeyNumber($tonnage, $keyTonnage);
     }
-?>
 
-
-<?php
-    $str = '';
-    $method = $_SERVER['REQUEST_METHOD'];
-    if ($method == 'POST'){
-        $isTrueParameters = isset($productIndex, $monthIndex, $tonnageIndex);
-
-        if ($isTrueParameters) {
-            $str = "<p>Цена: {$arr[$keyArr[$productIndex]][$keyTonnage[$tonnageIndex]][$monthIndex]}</p>";
-            $str .= tableOutput($arr, $keyArr[$productIndex], $arrMonth);
-        } else {
-            $str =  "<p>Укажите верные параметры!</p>";
-        }
-    }
+    $post = $_SERVER['REQUEST_METHOD'] === 'POST';
 ?>
 
 <!DOCTYPE html>
@@ -56,19 +42,43 @@
                 <div class="main__body d-lg-flex justify-content-between">
                     <div class="main__form me-3 col-12 col-sm-8 col-lg-4">
                         <form action="<?=$_SERVER['$REQUEST_NAME']?>" method="post" name="form" class="d-flex flex-column justify-content-between h-100">
-                            <?= warning('продукт', $_REQUEST['product'])?>
+                            <?php if ($post && $_REQUEST['product'] === 'продукт'): ?>
+                                    <p class='warning mb-1'>выберите продукт</p>
+                            <?php endif; ?>
+
                             <select class="form-select mb-3" aria-label="Default select example" name="product">
-                                <?= option($keyArr, 'продукт', $_REQUEST['product'])?>
+                                <?php $select = ($_REQUEST['product'] === null) || ($_REQUEST['product'] === 'продукт') ? 'selected' : ''?>
+                                <option <?=$select?> >продукт</option>
+                                <?php foreach($keyArr as $key => $value): ?>
+                                    <?php $ch = (string) $key === $_REQUEST['product'] ? 'selected' : ''?>
+                                    <option <?=$ch?> value="<?=$key?>"><?=$value?></option>
+                                <?php endforeach; ?>
                             </select>
 
-                            <?= warning('месяц', $_REQUEST['month'])?>
+                            <?php if ($post && $_REQUEST['month'] === 'месяц'): ?>
+                                    <p class='warning mb-1'>выберите месяц</p>
+                            <?php endif; ?>
+
                             <select class="form-select mb-3" aria-label="Default select example" name="month">
-                                <?= option($arrMonth, 'месяц', $_REQUEST['month'])?>
+                                <?php $select = ($_REQUEST['month'] === null) || ($_REQUEST['month'] === 'месяц') ? 'selected' : ''?>
+                                <option <?=$select?> >месяц</option>
+                                <?php foreach($arrMonth as $key => $value): ?>
+                                    <?php $ch = (string) $key === $_REQUEST['month'] ? 'selected' : ''?>
+                                    <option <?=$ch?> value="<?=$key?>"><?=$value?></option>
+                                <?php endforeach; ?>
                             </select>
 
-                            <?= warning('тоннаж', $_REQUEST['tonnage'])?>
+                            <?php if ($post && $_REQUEST['tonnage'] === 'тоннаж'): ?>
+                                    <p class='warning mb-1'>выберите тоннаж</p>
+                            <?php endif; ?>
+
                             <select class="form-select mb-3" aria-label="Default select example" name="tonnage">
-                                <?= option($keyTonnage, 'тоннаж', $_REQUEST['tonnage'])?>
+                                <?php $select = ($_REQUEST['tonnage'] === null) || ($_REQUEST['tonnage'] === 'тоннаж') ? 'selected' : ''?>
+                                <option <?=$select?> >тоннаж</option>
+                                <?php foreach($keyTonnage as $key => $value): ?>
+                                    <?php $ch = (string) $key === $_REQUEST['tonnage'] ? 'selected' : ''?>
+                                    <option <?=$ch?> value="<?=$key?>"><?=$value?></option>
+                                <?php endforeach; ?>
                             </select>
 
                             <div class="main__button d-flex justify-content-between">
@@ -78,7 +88,28 @@
                         </form>
                     </div>
                     <div class="main__table mt-5 mt-lg-0">
-                        <?= $str ?>
+                        <?php
+                        $isParameters = isset($productIndex, $monthIndex, $tonnageIndex);
+                        if ($post && $isParameters): ?>
+                            <p>Цена: <?=$arr[$keyArr[$productIndex]][$keyTonnage[$tonnageIndex]][$monthIndex]?></p>
+                            <p class='product'><?=$keyArr[$productIndex]?></p>
+                            <table>
+                                <tr><td>мес/тон</td>
+                                <?php foreach ($arrMonth as $value): ?>
+                                    <td><?=$value?></td>
+                                <?php endforeach; ?>
+                                </tr>
+                                <?php foreach ($arr[$keyArr[$productIndex]] as $key => $value): ?>
+                                    <tr><td><?=$key?></td>
+                                    <?php foreach ($value as $val): ?>
+                                        <td><?=$val?></td>
+                                    <?php endforeach; ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php elseif ($post && !$isParameters): ?>
+                            <p>Укажите верные параметры!</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </main>

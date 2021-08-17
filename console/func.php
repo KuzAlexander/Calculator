@@ -9,11 +9,15 @@
         echo PHP_EOL;
     }
 
-    function getKeyNumber(string $element, array $array): int
+    function getKeyNumber(string $element, array $array): ?int
     {
         $key = array_keys($array);
-        $num = array_search($element, $key);
-        return $num === false ? -1 : $num;
+        foreach ($key as $value) {
+            if ($element === (string) $value) {
+                return $value;
+            }
+        }
+        return null;
     }
 
     function tableOutput(array $array, string $product, array $month): string
