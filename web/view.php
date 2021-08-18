@@ -18,42 +18,39 @@
             <div class="main__body d-lg-flex justify-content-between">
                 <div class="main__form me-3 col-12 col-sm-8 col-lg-4">
                     <form action="<?=$_SERVER['$REQUEST_NAME']?>" method="post" name="form" class="d-flex flex-column justify-content-between h-100">
-                        <?php if ($post && $_REQUEST['product'] === 'продукт'): ?>
+                        <?php if ($_POST['product'] === ''): ?>
                             <p class='warning mb-1'>выберите продукт</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="product">
-                            <?php $select = ($_REQUEST['product'] === null) || ($_REQUEST['product'] === 'продукт') ? 'selected' : ''?>
-                            <option <?=$select?> >продукт</option>
-                            <?php foreach($keyArr as $key => $value): ?>
-                                <?php $ch = (string) $key === $_REQUEST['product'] ? 'selected' : ''?>
-                                <option <?=$ch?> value="<?=$key?>"><?=$value?></option>
+                            <?php $select = ($_POST['product'] === null) || ($_POST['product'] === '') ? 'selected' : ''?>
+                            <option <?=$select?> value="">продукт</option>
+                            <?php foreach($keyArrProduct as $key => $value): ?>
+                                <option <?=(string) $key === $_POST['product'] ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
-                        <?php if ($post && $_REQUEST['month'] === 'месяц'): ?>
+                        <?php if ($_POST['month'] === ''): ?>
                             <p class='warning mb-1'>выберите месяц</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="month">
-                            <?php $select = ($_REQUEST['month'] === null) || ($_REQUEST['month'] === 'месяц') ? 'selected' : ''?>
-                            <option <?=$select?> >месяц</option>
+                            <?php $select = ($_POST['month'] === null) || ($_POST['month'] === '') ? 'selected' : ''?>
+                            <option <?=$select?> value="">месяц</option>
                             <?php foreach($arrMonth as $key => $value): ?>
-                                <?php $ch = (string) $key === $_REQUEST['month'] ? 'selected' : ''?>
-                                <option <?=$ch?> value="<?=$key?>"><?=$value?></option>
+                                <option <?=(string) $key === $_POST['month'] ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
-                        <?php if ($post && $_REQUEST['tonnage'] === 'тоннаж'): ?>
+                        <?php if ($_POST['tonnage'] === ''): ?>
                             <p class='warning mb-1'>выберите тоннаж</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="tonnage">
-                            <?php $select = ($_REQUEST['tonnage'] === null) || ($_REQUEST['tonnage'] === 'тоннаж') ? 'selected' : ''?>
-                            <option <?=$select?> >тоннаж</option>
+                            <?php $select = ($_POST['tonnage'] === null) || ($_POST['tonnage'] === '') ? 'selected' : ''?>
+                            <option <?=$select?> value="">тоннаж</option>
                             <?php foreach($keyTonnage as $key => $value): ?>
-                                <?php $ch = (string) $key === $_REQUEST['tonnage'] ? 'selected' : ''?>
-                                <option <?=$ch?> value="<?=$key?>"><?=$value?></option>
+                                <option <?=(string) $key === $_POST['tonnage'] ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
@@ -64,27 +61,27 @@
                     </form>
                 </div>
                 <div class="main__table mt-5 mt-lg-0">
-                    <?php
-                    $isParameters = isset($productIndex, $monthIndex, $tonnageIndex);
-                    if ($post && $isParameters): ?>
-                        <p>Цена: <?=$arr[$keyArr[$productIndex]][$keyTonnage[$tonnageIndex]][$monthIndex]?></p>
-                        <p class='product'><?=$keyArr[$productIndex]?></p>
-                        <table>
-                            <tr><td>мес/тон</td>
-                                <?php foreach ($arrMonth as $value): ?>
-                                    <td><?=$value?></td>
-                                <?php endforeach; ?>
-                            </tr>
-                            <?php foreach ($arr[$keyArr[$productIndex]] as $key => $value): ?>
-                                <tr><td><?=$key?></td>
-                                    <?php foreach ($value as $val): ?>
-                                        <td><?=$val?></td>
+                    <?php if ($_SERVER['REQUEST_METHOD'] === "POST"): ?>
+                        <?php if (isset($productIndex, $monthIndex, $tonnageIndex)): ?>
+                            <p>Цена: <?=$arrProduct[$keyArrProduct[$productIndex]][$keyTonnage[$tonnageIndex]][$monthIndex]?></p>
+                            <p class='product'><?=$keyArrProduct[$productIndex]?></p>
+                            <table>
+                                <tr><td>мес/тон</td>
+                                    <?php foreach ($arrMonth as $value): ?>
+                                        <td><?=$value?></td>
                                     <?php endforeach; ?>
                                 </tr>
-                            <?php endforeach; ?>
-                        </table>
-                    <?php elseif ($post && !$isParameters): ?>
-                        <p>Укажите верные параметры!</p>
+                                <?php foreach ($arrProduct[$keyArrProduct[$productIndex]] as $key => $value): ?>
+                                    <tr><td><?=$key?></td>
+                                        <?php foreach ($value as $val): ?>
+                                            <td><?=$val?></td>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php else: ?>
+                            <p>Укажите верные параметры!</p>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
