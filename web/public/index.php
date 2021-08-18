@@ -7,8 +7,8 @@
 
     $data = require_once(getAbsolutePath('@/data/table.php'));
 
-    $arrMonth = $data[0];
-    $arrProduct = $data[1];
+    $arrMonth = $data['Month'];
+    $arrProduct = $data['Product'];
 
     require_once (getAbsolutePath('@/web/func.php'));
 
