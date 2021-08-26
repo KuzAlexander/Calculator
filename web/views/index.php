@@ -1,3 +1,16 @@
+<?php
+    /**
+     * @var array $keyArrProduct
+     * @var array $arrMonth
+     * @var array $keyTonnage
+     * @var array $arrProduct
+     * @var int $productIndex
+     * @var int $monthIndex
+     * @var int $tonnageIndex
+     * @var Request $request
+     * @var View $this
+     */
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,39 +31,39 @@
             <div class="main__body d-lg-flex justify-content-between">
                 <div class="main__form me-3 col-12 col-sm-8 col-lg-4">
                     <form action="<?=$_SERVER['$REQUEST_NAME']?>" method="post" name="form" class="d-flex flex-column justify-content-between h-100">
-                        <?php if ($_POST['product'] === ''): ?>
+                        <?php if ($request->getPost('product') === null): ?>
                             <p class='warning mb-1'>выберите продукт</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="product">
-                            <?php $select = ($_POST['product'] === null) || ($_POST['product'] === '') ? 'selected' : ''?>
+                            <?php $select = (count($request->getPost('product')) === 0) || ($request->getPost('product') === null) ? 'selected' : ''?>
                             <option <?=$select?> value="">продукт</option>
                             <?php foreach($keyArrProduct as $key => $value): ?>
-                                <option <?=(string) $key === $_POST['product'] ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
+                                <option <?=(string) $key === $request->getPost('product') ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
-                        <?php if ($_POST['month'] === ''): ?>
+                        <?php if ($request->getPost('month') === null): ?>
                             <p class='warning mb-1'>выберите месяц</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="month">
-                            <?php $select = ($_POST['month'] === null) || ($_POST['month'] === '') ? 'selected' : ''?>
+                            <?php $select = (count($request->getPost('month')) === 0) || ($request->getPost('month') === null) ? 'selected' : ''?>
                             <option <?=$select?> value="">месяц</option>
                             <?php foreach($arrMonth as $key => $value): ?>
-                                <option <?=(string) $key === $_POST['month'] ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
+                                <option <?=(string) $key === $request->getPost('month') ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
-                        <?php if ($_POST['tonnage'] === ''): ?>
+                        <?php if (($request->getPost('tonnage') === null)): ?>
                             <p class='warning mb-1'>выберите тоннаж</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="tonnage">
-                            <?php $select = ($_POST['tonnage'] === null) || ($_POST['tonnage'] === '') ? 'selected' : ''?>
+                            <?php $select = (count($request->getPost('tonnage')) === 0) || ($request->getPost('tonnage') === null) ? 'selected' : ''?>
                             <option <?=$select?> value="">тоннаж</option>
                             <?php foreach($keyTonnage as $key => $value): ?>
-                                <option <?=(string) $key === $_POST['tonnage'] ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
+                                <option <?=(string) $key === $request->getPost('tonnage') ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
@@ -61,7 +74,7 @@
                     </form>
                 </div>
                 <div class="main__table mt-5 mt-lg-0">
-                    <?php if ($_SERVER['REQUEST_METHOD'] === "POST"): ?>
+                    <?php if ($request->isPost()): ?>
                         <?php if (isset($productIndex, $monthIndex, $tonnageIndex)): ?>
                             <p>Цена: <?=$arrProduct[$keyArrProduct[$productIndex]][$keyTonnage[$tonnageIndex]][$monthIndex]?></p>
                             <p class='product'><?=$keyArrProduct[$productIndex]?></p>
