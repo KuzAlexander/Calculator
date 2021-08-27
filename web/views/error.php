@@ -17,8 +17,12 @@
 </head>
 <body>
     <div class="wrap__error">
-        <div class="pt-5 pb-5 d-flex flex-column">
-            <p><?=$errorMassage?></p>
+        <div class="container">
+            <div class="pt-5 pb-5 d-flex flex-column">
+                <div class="alert alert-danger" role="alert">
+                    <?=$errorMassage?>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -50,7 +50,7 @@
             'request' => $request,
         ]);
     } else {
-        $errorMassage = '404 страница не найдена';
+        $errorMassage = '404 Страница не найдена';
         $response->setStatusCode(404, 'Not Found');
         $content = $view->renderPhpFile('@/web/views/error.php', ['errorMassage' => $errorMassage]);
     }

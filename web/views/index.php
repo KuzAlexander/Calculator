@@ -23,44 +23,46 @@
 </head>
 <body>
 <div class="wrap">
-    <div class="container pt-5 pb-5 d-flex flex-column">
-        <main class="main d-flex flex-column justify-content-between">
+    <div class="container">
+        <main class="main pt-5 pb-5 d-flex flex-column justify-content-between">
             <div class="main__title text-center">
                 <p class="fs-3 text-uppercase lh-base">Калькулятор начальной стоимости предложения</p>
             </div>
             <div class="main__body d-lg-flex justify-content-between">
                 <div class="main__form me-3 col-12 col-sm-8 col-lg-4">
                     <form action="<?=$_SERVER['$REQUEST_NAME']?>" method="post" name="form" class="d-flex flex-column justify-content-between h-100">
-                        <?php if ($request->getPost('product') === null): ?>
+                        <?php if ($request->getPost('product') === ''): ?>
                             <p class='warning mb-1'>выберите продукт</p>
                         <?php endif; ?>
 
+
+                        <?php var_dump($request->getPost('product')) ?>
                         <select class="form-select mb-3" aria-label="Default select example" name="product">
-                            <?php $select = (count($request->getPost('product')) === 0) || ($request->getPost('product') === null) ? 'selected' : ''?>
+                            <?php $select = ($request->getPost('product') === '') || ($request->getPost('product') === null) ? 'selected' : ''?>
                             <option <?=$select?> value="">продукт</option>
                             <?php foreach($keyArrProduct as $key => $value): ?>
                                 <option <?=(string) $key === $request->getPost('product') ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
-                        <?php if ($request->getPost('month') === null): ?>
+                        <?php if ($request->getPost('month') === ''): ?>
                             <p class='warning mb-1'>выберите месяц</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="month">
-                            <?php $select = (count($request->getPost('month')) === 0) || ($request->getPost('month') === null) ? 'selected' : ''?>
+                            <?php $select = ($request->getPost('month') === '') || ($request->getPost('month') === null) ? 'selected' : ''?>
                             <option <?=$select?> value="">месяц</option>
                             <?php foreach($arrMonth as $key => $value): ?>
                                 <option <?=(string) $key === $request->getPost('month') ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>
                             <?php endforeach; ?>
                         </select>
 
-                        <?php if (($request->getPost('tonnage') === null)): ?>
+                        <?php if ($request->getPost('tonnage') === ''): ?>
                             <p class='warning mb-1'>выберите тоннаж</p>
                         <?php endif; ?>
 
                         <select class="form-select mb-3" aria-label="Default select example" name="tonnage">
-                            <?php $select = (count($request->getPost('tonnage')) === 0) || ($request->getPost('tonnage') === null) ? 'selected' : ''?>
+                            <?php $select = ($request->getPost('tonnage') === '') || ($request->getPost('tonnage') === null) ? 'selected' : ''?>
                             <option <?=$select?> value="">тоннаж</option>
                             <?php foreach($keyTonnage as $key => $value): ?>
                                 <option <?=(string) $key === $request->getPost('tonnage') ? 'selected' : ''?> value="<?=$key?>"><?=$value?></option>

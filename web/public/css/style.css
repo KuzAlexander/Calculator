@@ -176,7 +176,7 @@ body {
   background-position: cover;
 }
 
-.container::after {
+.main::after {
   content: '';
   position: absolute;
   top: 0;
