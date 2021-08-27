@@ -35,8 +35,6 @@
                             <p class='warning mb-1'>выберите продукт</p>
                         <?php endif; ?>
 
-
-                        <?php var_dump($request->getPost('product')) ?>
                         <select class="form-select mb-3" aria-label="Default select example" name="product">
                             <?php $select = ($request->getPost('product') === '') || ($request->getPost('product') === null) ? 'selected' : ''?>
                             <option <?=$select?> value="">продукт</option>
