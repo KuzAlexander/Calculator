@@ -28,7 +28,7 @@
             <div class="main__menu">
                 <?php
                     $str = $_SERVER['REQUEST_URI'];
-                    require_once ('menu.php')
+                    echo $this->renderPhpFile('@/web/views/menu.php', ['str'=>$str]);
                 ?>
             </div>
             <div class="main__title text-center">

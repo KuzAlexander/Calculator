@@ -18,9 +18,11 @@
                     <a class="nav-link <?=$str === '/index.php' || $str === '/' ? 'active' : ''?>" href="index.php">Главная</a>
                 </li>
                 <li class="nav-item">
+                    <?php $str = substr($str, stripos($str,'?')) ?>
                     <a class="nav-link <?=$str === '?page=product' ? 'active' : ''?>" href="?page=product">Продукты</a>
                 </li>
                 <li class="nav-item">
+                    <?php $str = substr($str, stripos($str,'?')) ?>
                     <a class="nav-link <?=$str === '?page=tonnage' ? 'active' : ''?>" href="?page=tonnage">Тоннаж</a>
                 </li>
             </ul>

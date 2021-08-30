@@ -22,8 +22,7 @@
             <div class="main__menu">
                 <?php
                     $str = $_SERVER['REQUEST_URI'];
-                    $str = substr($str, stripos($str,'?'));
-                    require_once ('menu.php')
+                    echo $this->renderPhpFile('@/web/views/menu.php', ['str'=>$str]);
                 ?>
             </div>
             <div class="main__block">

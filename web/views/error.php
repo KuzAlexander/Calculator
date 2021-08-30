@@ -1,6 +1,5 @@
 <?php
 /**
- * @var array $error
  * @var View $this
  * @var string $errorMassage
  */
@@ -20,7 +19,7 @@
         <div class="container">
             <div class="main pt-5 pb-5 d-flex flex-column">
                 <div class="main__menu">
-                    <?php require_once ('menu.php') ?>
+                    <?=$this->renderPhpFile('@/web/views/menu.php')?>
                 </div>
                 <div class="main__block">
                     <div class="alert alert-light" role="alert">
