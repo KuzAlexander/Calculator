@@ -16,11 +16,16 @@
     <title>Calculator</title>
 </head>
 <body>
-    <div class="wrap__error">
+    <div class="wrap">
         <div class="container">
-            <div class="pt-5 pb-5 d-flex flex-column">
-                <div class="alert alert-danger" role="alert">
-                    <?=$errorMassage?>
+            <div class="main pt-5 pb-5 d-flex flex-column">
+                <div class="main__menu">
+                    <?php require_once ('menu.php') ?>
+                </div>
+                <div class="main__block">
+                    <div class="alert alert-light" role="alert">
+                        <?=$errorMassage?>
+                    </div>
                 </div>
             </div>
         </div>

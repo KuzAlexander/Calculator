@@ -186,6 +186,11 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.main__menu {
+  position: relative;
+  z-index: 1;
+}
+
 .main__title {
   margin: 50px 0 250px 0;
 }
@@ -228,6 +233,15 @@ body {
 
 .main .warning {
   color: red;
+}
+
+.main__block {
+  position: relative;
+  z-index: 1;
+}
+
+.main__block p {
+  color: #ffffff;
 }
 
 @media (max-width: 992px) {

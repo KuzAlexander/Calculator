@@ -25,12 +25,18 @@
 <div class="wrap">
     <div class="container">
         <main class="main pt-5 pb-5 d-flex flex-column justify-content-between">
+            <div class="main__menu">
+                <?php
+                    $str = $_SERVER['REQUEST_URI'];
+                    require_once ('menu.php')
+                ?>
+            </div>
             <div class="main__title text-center">
                 <p class="fs-3 text-uppercase lh-base">Калькулятор начальной стоимости предложения</p>
             </div>
             <div class="main__body d-lg-flex justify-content-between">
                 <div class="main__form me-3 col-12 col-sm-8 col-lg-4">
-                    <form action="<?=$_SERVER['$REQUEST_NAME']?>" method="post" name="form" class="d-flex flex-column justify-content-between h-100">
+                    <form action="<?=$_SERVER['SCRIPT_NAME']?>" method="post" name="form" class="d-flex flex-column justify-content-between h-100">
                         <?php if ($request->getPost('product') === ''): ?>
                             <p class='warning mb-1'>выберите продукт</p>
                         <?php endif; ?>

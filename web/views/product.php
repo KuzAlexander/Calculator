@@ -16,13 +16,22 @@
     <title>Calculator</title>
 </head>
 <body>
-<div class="wrap__product">
+<div class="wrap">
     <div class="container">
-        <div class="pt-5 pb-5 d-flex flex-column">
-            <p class="fs-3 mb-3"><?=$products?></p>
-            <?php foreach ($keyArrProduct as $key => $value): ?>
-                <p class="fs-4 mb-2"><?=$key + 1 . '. ' . $value?></p>
-            <?php endforeach; ?>
+        <div class="main pt-5 pb-5 d-flex flex-column">
+            <div class="main__menu">
+                <?php
+                    $str = $_SERVER['REQUEST_URI'];
+                    $str = substr($str, stripos($str,'?'));
+                    require_once ('menu.php')
+                ?>
+            </div>
+            <div class="main__block">
+                <p class="fs-3 mb-3"><?=$products?></p>
+                <?php foreach ($keyArrProduct as $key => $value): ?>
+                    <p class="fs-4 mb-2"><?=$key + 1 . '. ' . $value?></p>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </div>
