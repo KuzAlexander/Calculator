@@ -50,15 +50,18 @@
     } elseif ($request->get('page') === 'product') {
         $products = 'Продукты:';
         $content = $view->renderPhpFile('@/web/views/product.php', ['keyArrProduct' => $keyArrProduct,
-            'products' => $products]);
+            'products' => $products,
+            'request' => $request]);
     } elseif ($request->get('page') === 'tonnage') {
         $tonnage = 'Тоннаж:';
         $content = $view->renderPhpFile('@/web/views/tonnage.php', ['keyTonnage' => $keyTonnage,
-            'tonnage' => $tonnage]);
+            'tonnage' => $tonnage,
+            'request' => $request]);
     } else {
         $errorMassage = '404 Страница не найдена';
         $response->setStatusCode(404, 'Not Found');
-        $content = $view->renderPhpFile('@/web/views/error.php', ['errorMassage' => $errorMassage]);
+        $content = $view->renderPhpFile('@/web/views/error.php', ['errorMassage' => $errorMassage,
+            'request' => $request]);
     }
 
     $response->setContent($content);

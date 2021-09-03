@@ -26,10 +26,7 @@
     <div class="container">
         <main class="main pt-5 pb-5 d-flex flex-column justify-content-between">
             <div class="main__menu">
-                <?php
-                    $str = $_SERVER['REQUEST_URI'];
-                    echo $this->renderPhpFile('@/web/views/menu.php', ['str'=>$str]);
-                ?>
+                <?=$this->renderPhpFile('@/web/views/menu.php', ['request'=>$request])?>
             </div>
             <div class="main__title text-center">
                 <p class="fs-3 text-uppercase lh-base">Калькулятор начальной стоимости предложения</p>
