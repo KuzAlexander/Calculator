@@ -8,7 +8,7 @@ class View
     {
         extract($params, EXTR_OVERWRITE);
         ob_start();
-        require_once str_replace('@', dirname(__DIR__, 2), $path);
+        require_once getAbsolutePath($path);
         return ob_get_clean();
     }
 
