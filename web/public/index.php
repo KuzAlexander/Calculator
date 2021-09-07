@@ -65,7 +65,7 @@
         $response->setStatusCode(404, 'Not Found');
         $content = $view->renderPhpFile('@/web/views/error.php', ['errorMassage' => $errorMassage,
             'request' => $request]);
-        $content = $view->renderPhpFile('@/web/views/layouts/main.php', ['content'=>$content]);
+        $content = $view->renderPhpFile('@/web/views/layouts/error.php', ['content'=>$content]);
     }
 
     $response->setContent($content);
