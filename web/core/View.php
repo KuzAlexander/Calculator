@@ -2,7 +2,12 @@
 
 class View
 {
-    public $layout = '@/web/views/layouts/main.php';
+    public string $layout = '@/web/views/layouts/main.php';
+
+    public function __construct(string $layout = '')
+    {
+        $this->layout = !empty($layout) ? $layout : $this->layout;
+    }
 
     public function renderPhpFile(string $path, array $params = []): string
     {
@@ -12,10 +17,9 @@ class View
         return ob_get_clean();
     }
 
-    public function render(string $path, array $params = [], string $layout = ''): string
+    public function render(string $path, array $params = []): string
     {
-        $layout = !empty($layout) ? $layout : $this->layout;
         $content = $this->renderPhpFile($path, $params);
-        return $this->renderPhpFile($layout, ['content'=>$content]);
+        return $this->renderPhpFile($this->layout, ['content'=>$content]);
     }
 }
