@@ -12,16 +12,15 @@
     $response  = new Response();
     $view = new View();
 
+    $data = require_once(getAbsolutePath('@/data/table.php'));
+    $arrMonth = $data['Month'];
+    $arrProduct = $data['Product'];
+    $keyArrProduct = array_keys($arrProduct);
+    $keyTonnage = array_keys($arrProduct[$keyArrProduct[0]]);
+
     if (!$request->get() || $request->get('page') === '' || $request->get('page') === 'index') {
 
-        $data = require_once(getAbsolutePath('@/data/table.php'));
-
-        $arrMonth = $data['Month'];
-        $arrProduct = $data['Product'];
-
         require_once (getAbsolutePath('@/web/func.php'));
-
-        $keyArrProduct = array_keys($arrProduct);
 
         $product = $request->getPost('product');
         if (isset($product)) {
@@ -33,7 +32,6 @@
             $monthIndex = getKeyNumber($month, $arrMonth);
         }
 
-        $keyTonnage = array_keys($arrProduct[$keyArrProduct[0]]);
         $tonnage = $request->getPost('tonnage');
         if (isset($tonnage)) {
             $tonnageIndex = getKeyNumber($tonnage, $keyTonnage);
@@ -49,10 +47,21 @@
             'tonnageIndex' => $tonnageIndex,
             'request' => $request,
         ]);
+    } elseif ($request->get('page') === 'product') {
+        $products = 'Продукты:';
+        $content = $view->renderPhpFile('@/web/views/product.php', ['keyArrProduct' => $keyArrProduct,
+            'products' => $products,
+            'request' => $request]);
+    } elseif ($request->get('page') === 'tonnage') {
+        $tonnage = 'Тоннаж:';
+        $content = $view->renderPhpFile('@/web/views/tonnage.php', ['keyTonnage' => $keyTonnage,
+            'tonnage' => $tonnage,
+            'request' => $request]);
     } else {
-        $errorMassage = '404 страница не найдена';
+        $errorMassage = '404 Страница не найдена';
         $response->setStatusCode(404, 'Not Found');
-        $content = $view->renderPhpFile('@/web/views/error.php', ['errorMassage' => $errorMassage]);
+        $content = $view->renderPhpFile('@/web/views/error.php', ['errorMassage' => $errorMassage,
+            'request' => $request]);
     }
 
     $response->setContent($content);

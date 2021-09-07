@@ -12,11 +12,10 @@ class Request
         return $this->getRequestMethod() === 'POST';
     }
 
-    // переделать как get()
     public function getPost(string $key = '', $default = null)
     {
-        if ($this->isPost() && $key !== ''){
-            return $_POST[$key] !== '' ? $_POST[$key] : $default;
+        if ($key !== '') {
+            return array_key_exists($key, $_POST) ? $_POST[$key] : $default;
         } else {
             return $_POST;
         }
