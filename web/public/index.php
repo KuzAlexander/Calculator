@@ -47,21 +47,25 @@
             'tonnageIndex' => $tonnageIndex,
             'request' => $request,
         ]);
+        $content = $view->renderPhpFile('@/web/views/layouts/main.php', ['content'=>$content]);
     } elseif ($request->get('page') === 'product') {
         $products = 'Продукты:';
         $content = $view->renderPhpFile('@/web/views/product.php', ['keyArrProduct' => $keyArrProduct,
             'products' => $products,
             'request' => $request]);
+        $content = $view->renderPhpFile('@/web/views/layouts/main.php', ['content'=>$content]);
     } elseif ($request->get('page') === 'tonnage') {
         $tonnage = 'Тоннаж:';
         $content = $view->renderPhpFile('@/web/views/tonnage.php', ['keyTonnage' => $keyTonnage,
             'tonnage' => $tonnage,
             'request' => $request]);
+        $content = $view->renderPhpFile('@/web/views/layouts/main.php', ['content'=>$content]);
     } else {
         $errorMassage = '404 Страница не найдена';
         $response->setStatusCode(404, 'Not Found');
         $content = $view->renderPhpFile('@/web/views/error.php', ['errorMassage' => $errorMassage,
             'request' => $request]);
+        $content = $view->renderPhpFile('@/web/views/layouts/main.php', ['content'=>$content]);
     }
 
     $response->setContent($content);
