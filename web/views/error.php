@@ -5,17 +5,13 @@
  * @var string $errorMassage
  */
 ?>
-<div class="wrap">
-    <div class="container">
-        <div class="main pt-5 pb-5 d-flex flex-column">
-            <div class="main__menu">
-                <?=$this->renderPhpFile('@/web/views/menu.php', ['request'=>$request])?>
-            </div>
-            <div class="main__block">
-                <div class="alert alert-light" role="alert">
-                    <?=$errorMassage?>
-                </div>
-            </div>
-        </div>
+<div class="container pt-5 pb-5">
+    <div class="pb-5">
+        <a class="link-secondary fs-4" href="index.php">Главная</a>
+    </div>
+    <div class="text-center mt-5">
+        <p class="fs-1 fw-bold text-primary">
+            <?=$errorMassage?>
+        </p>
     </div>
 </div>
