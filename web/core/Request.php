@@ -1,4 +1,5 @@
 <?php
+namespace app\web\core;
 
 class Request
 {
