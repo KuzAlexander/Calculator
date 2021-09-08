@@ -4,9 +4,15 @@
         return str_replace('@', dirname(__DIR__, 2), $path);
     }
 
-    require_once getAbsolutePath('@/web/core/Request.php');
-    require_once getAbsolutePath('@/web/core/Response.php');
-    require_once getAbsolutePath('@/web/core/View.php');
+    function autoloader($class)
+    {
+        $class = str_replace(["\\", 'app'], ['/', ''], $class);
+        $file = dirname(__DIR__, 2) . "/{$class}.php";
+        if (file_exists($file)) {
+            require_once $file;
+        }
+    }
+    spl_autoload_register('autoloader');
 
     $request = new \app\web\core\Request();
     $response  = new \app\web\core\Response();
