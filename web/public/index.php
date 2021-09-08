@@ -10,7 +10,7 @@ function getAbsolutePath (string $path): string
 function autoloader($class)
 {
     $class = str_replace(["\\", 'app'], ['/', ''], $class);
-    $file = dirname(__DIR__, 2) . "/{$class}.php";
+    $file = getAbsolutePath("@{$class}.php");
     if (file_exists($file)) {
         require_once $file;
     }
