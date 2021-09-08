@@ -1,7 +1,9 @@
 <?php
+namespace app\web\core;
+
 class Response
 {
-    private $content;
+    private string $content;
 
     public function setStatusCode(int $code, string $phrase): void
     {

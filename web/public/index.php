@@ -8,9 +8,9 @@
     require_once getAbsolutePath('@/web/core/Response.php');
     require_once getAbsolutePath('@/web/core/View.php');
 
-    $request = new Request();
-    $response  = new Response();
-    $view = new View();
+    $request = new \app\web\core\Request();
+    $response  = new \app\web\core\Response();
+    $view = new \app\web\core\View();
 
     $data = require_once(getAbsolutePath('@/data/table.php'));
     $arrMonth = $data['Month'];
