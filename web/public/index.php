@@ -1,6 +1,7 @@
 <?php
 
-use app\web\core\{Request, Response, View};
+use app\web\core\{Request};
+use app\web\actions\{Index, Product, Tonnage, ErrorPage};
 
 function getAbsolutePath (string $path): string
 {
@@ -18,66 +19,23 @@ function autoloader($class)
 spl_autoload_register('autoloader');
 
 $request = new Request();
-$response  = new Response();
-$view = new View();
-
-$data = require_once(getAbsolutePath('@/data/table.php'));
-$arrMonth = $data['Month'];
-$arrProduct = $data['Product'];
-$keyArrProduct = array_keys($arrProduct);
-$keyTonnage = array_keys($arrProduct[$keyArrProduct[0]]);
+$index = new Index();
+$product = new Product();
+$tonnage = new Tonnage();
+$error = new ErrorPage();
 
 if (!$request->get() || $request->get('page') === '' || $request->get('page') === 'index') {
-
-    require_once (getAbsolutePath('@/web/func.php'));
-
-    $product = $request->getPost('product');
-    if (isset($product)) {
-        $productIndex = getKeyNumber($product, $keyArrProduct);
-    }
-
-    $month = $request->getPost('month');
-    if (isset($month)) {
-        $monthIndex = getKeyNumber($month, $arrMonth);
-    }
-
-    $tonnage = $request->getPost('tonnage');
-    if (isset($tonnage)) {
-        $tonnageIndex = getKeyNumber($tonnage, $keyTonnage);
-    }
-
-    $content = $view->render('@/web/views/index.php', [
-        'keyArrProduct' => $keyArrProduct,
-        'arrMonth' => $arrMonth,
-        'keyTonnage' => $keyTonnage,
-        'arrProduct' => $arrProduct,
-        'productIndex' => $productIndex,
-        'monthIndex' => $monthIndex,
-        'tonnageIndex' => $tonnageIndex,
-        'request' => $request,
-    ]);
+    $response = $index->handler($request);
+    $content = $index->content;
 } elseif ($request->get('page') === 'product') {
-    $products = 'Продукты:';
-    $content = $view->render('@/web/views/product.php', [
-        'keyArrProduct' => $keyArrProduct,
-        'products' => $products,
-        'request' => $request,
-    ]);
+    $response = $product->handler($request);
+    $content = $product->content;
 } elseif ($request->get('page') === 'tonnage') {
-    $tonnage = 'Тоннаж:';
-    $content = $view->render('@/web/views/tonnage.php', [
-        'keyTonnage' => $keyTonnage,
-        'tonnage' => $tonnage,
-        'request' => $request,
-    ]);
+    $response = $tonnage->handler($request);
+    $content = $tonnage->content;
 } else {
-    $errorMassage = '404 Страница не найдена';
-    $response->setStatusCode(404, 'Not Found');
-    $view->layout = '@/web/views/layouts/error.php';
-    $content = $view->render('@/web/views/error.php', [
-        'errorMassage' => $errorMassage,
-        'request' => $request
-    ]);
+    $response = $error->handler($request);
+    $content = $error->content;
 }
 
 $response->setContent($content);
