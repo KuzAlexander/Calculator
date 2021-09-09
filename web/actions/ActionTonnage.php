@@ -1,9 +1,9 @@
 <?php
 namespace app\web\actions;
 
-use app\web\core\{View, Request, Response};
+use app\web\core\{Response, View, Request};
 
-class Product
+class ActionTonnage
 {
     public string $content;
 
@@ -15,11 +15,12 @@ class Product
         $data = require_once(getAbsolutePath('@/data/table.php'));
         $arrProduct = $data['Product'];
         $keyArrProduct = array_keys($arrProduct);
-        $products = 'Продукты:';
+        $keyTonnage = array_keys($arrProduct[$keyArrProduct[0]]);
+        $tonnage = 'Тоннаж:';
 
-        $this->content = $view->render('@/web/views/product.php', [
-            'products' => $products,
-            'keyArrProduct' => $keyArrProduct,
+        $this->content = $view->render('@/web/views/tonnage.php', [
+            'tonnage' => $tonnage,
+            'keyTonnage' => $keyTonnage,
             'request' => $request,
         ]);
 
