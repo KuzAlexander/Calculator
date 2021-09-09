@@ -45,6 +45,8 @@ class Index
             'request' => $request,
         ]);
 
+        $response->setContent($this->content);
+
         return $response;
     }
 }

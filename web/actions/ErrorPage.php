@@ -19,6 +19,8 @@ class ErrorPage
             'request' => $request
         ]);
 
+        $response->setContent($this->content);
+
         return $response;
     }
 }

@@ -26,17 +26,12 @@ $error = new ErrorPage();
 
 if (!$request->get() || $request->get('page') === '' || $request->get('page') === 'index') {
     $response = $index->handler($request);
-    $content = $index->content;
 } elseif ($request->get('page') === 'product') {
     $response = $product->handler($request);
-    $content = $product->content;
 } elseif ($request->get('page') === 'tonnage') {
     $response = $tonnage->handler($request);
-    $content = $tonnage->content;
 } else {
     $response = $error->handler($request);
-    $content = $error->content;
 }
 
-$response->setContent($content);
 $response->send();
