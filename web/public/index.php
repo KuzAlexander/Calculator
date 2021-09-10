@@ -1,6 +1,6 @@
 <?php
 
-use app\web\core\Request;
+use app\web\core\{Request, Response};
 use app\web\actions\{IndexAction, ProductAction, TonnageAction, ErrorAction};
 
 function getAbsolutePath (string $path): string
@@ -20,18 +20,29 @@ spl_autoload_register('autoloader');
 
 $request = new Request();
 
-if (!$request->get() || $request->get('page') === '' || $request->get('page') === 'index') {
-    $index = new IndexAction();
-    $response = $index->handler($request);
-} elseif ($request->get('page') === 'product') {
-    $product = new ProductAction();
-    $response = $product->handler($request);
-} elseif ($request->get('page') === 'tonnage') {
-    $tonnage = new TonnageAction();
-    $response = $tonnage->handler($request);
-} else {
-    $error = new ErrorAction();
-    $response = $error->handler($request);
+function includePage(Request $request): Response
+{
+    $page = $request->get('page');
+    $path = getAbsolutePath('@/web/actions');
+
+    $name = 'ErrorAction';
+    foreach(glob($path . '/*') as $file) {
+        if(file_exists($file)) {
+            $longName = str_replace('.php', '', basename($file));
+            $shortName = lcfirst(str_replace('Action', '', $longName));
+
+            if ($page === $shortName) {
+                $name = $longName;
+            } elseif ($page === '' || !$request->get()) {
+                $name = 'IndexAction';
+            }
+        }
+    }
+
+    $className = "\app\web\actions\\$name";
+    $obj = new $className();
+
+    return $obj->handler($request);
 }
 
-$response->send();
+includePage($request)->send();
