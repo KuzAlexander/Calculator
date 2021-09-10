@@ -3,7 +3,7 @@ namespace app\web\actions;
 
 use app\web\core\{View, Request, Response};
 
-class ActionErrorPage
+class ErrorAction
 {
     public string $content;
 

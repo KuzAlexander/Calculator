@@ -3,7 +3,7 @@ namespace app\web\actions;
 
 use app\web\core\{View, Request, Response};
 
-class ActionProduct
+class ProductAction
 {
     public string $content;
 

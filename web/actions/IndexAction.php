@@ -3,7 +3,7 @@ namespace app\web\actions;
 
 use app\web\core\{Request, Response, View};
 
-class ActionIndex
+class IndexAction
 {
     public string $content;
 

@@ -3,7 +3,7 @@ namespace app\web\actions;
 
 use app\web\core\{Response, View, Request};
 
-class ActionTonnage
+class TonnageAction
 {
     public string $content;
 

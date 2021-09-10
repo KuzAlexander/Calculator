@@ -1,7 +1,7 @@
 <?php
 
 use app\web\core\Request;
-use app\web\actions\{ActionIndex, ActionProduct, ActionTonnage, ActionErrorPage};
+use app\web\actions\{IndexAction, ProductAction, TonnageAction, ErrorAction};
 
 function getAbsolutePath (string $path): string
 {
@@ -19,18 +19,18 @@ function autoloader($class)
 spl_autoload_register('autoloader');
 
 $request = new Request();
-$index = new ActionIndex();
-$product = new ActionProduct();
-$tonnage = new ActionTonnage();
-$error = new ActionErrorPage();
 
 if (!$request->get() || $request->get('page') === '' || $request->get('page') === 'index') {
+    $index = new IndexAction();
     $response = $index->handler($request);
 } elseif ($request->get('page') === 'product') {
+    $product = new ProductAction();
     $response = $product->handler($request);
 } elseif ($request->get('page') === 'tonnage') {
+    $tonnage = new TonnageAction();
     $response = $tonnage->handler($request);
 } else {
+    $error = new ErrorAction();
     $response = $error->handler($request);
 }
 
