@@ -22,27 +22,39 @@ $request = new Request();
 
 function includePage(Request $request): Response
 {
-    $page = $request->get('page');
-    $path = getAbsolutePath('@/web/actions');
+    $name = namePage($request, arrayNamePage());
+    $className = "\app\web\actions\\$name";
+    $pageAction = new $className();
 
-    $name = 'ErrorAction';
+    return $pageAction->handler($request);
+}
+
+function arrayNamePage(): array
+{
+    $path = getAbsolutePath('@/web/actions');
+    $namesPage = [];
     foreach(glob($path . '/*') as $file) {
         if(file_exists($file)) {
             $longName = str_replace('.php', '', basename($file));
             $shortName = lcfirst(str_replace('Action', '', $longName));
-
-            if ($page === $shortName) {
-                $name = $longName;
-            } elseif ($page === '' || !$request->get()) {
-                $name = 'IndexAction';
-            }
+            $namesPage[$shortName] = $longName;
         }
     }
+    return $namesPage;
+}
 
-    $className = "\app\web\actions\\$name";
-    $obj = new $className();
+function namePage(Request $request, array $namesPage): string
+{
+    $page = $request->get('page');
+    $name = 'ErrorAction';
 
-    return $obj->handler($request);
+    foreach($namesPage as $shorName => $longName)
+    if ($page === $shorName) {
+        $name = $longName;
+    } elseif ($page === '' || !$request->get()) {
+        $name = 'IndexAction';
+    }
+    return $name;
 }
 
 includePage($request)->send();
